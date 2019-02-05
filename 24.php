@@ -29,7 +29,8 @@ while(true) {
             $shouldSkip = false;
             foreach($filters as $filter) {
                 if ($filter) {
-                   $shouldSkip = true;
+                    $shouldSkip = true;
+                    break;
                 }
             }
 
