@@ -21,7 +21,7 @@ class NestedLoop
         $traverseSequence = [[
             'value' => 0,
             'level' => 0,
-            'parent' => -1,
+            'parent' => null,
             'path' => [],
             'pathHash' => []
         ]];
@@ -33,18 +33,16 @@ class NestedLoop
             $curLevel = $traverseSequence[$parentPos]['level'] + 1;
             if ($curLevel <= $maxLevel) {
                 for($i = 1; $i <= $numOfChilds; $i++) {
-                    $pathHash = $traverseSequence[$parentPos]['pathHash'];
-
                     //we gather and current information and store it into a node
                     $node = [];
                     $node['value'] = $i;
                     $node['level'] = $curLevel;
-                    $node['parentPathHash'] = $pathHash;
+                    $node['parent'] = $traverseSequence[$parentPos];
 
                     //filter, only find the unique sequence, aka, combination
                     $shouldSkip = false;
                     foreach($this->filters as $filter) {
-                        if ($filter($node) === TRUE) {
+                        if ($filter($node) === FALSE) {
                             $shouldSkip = true;
                             break;
                         }
@@ -56,9 +54,12 @@ class NestedLoop
 
                     $path = $traverseSequence[$parentPos]['path'];
                     $path[] = $i;
+                    $pathHash = $traverseSequence[$parentPos]['pathHash'];
                     $pathHash[$i] = 1;
+
                     $node['path'] = $path;
                     $node['pathHash'] = $pathHash;
+
                     $traverseSequence[] = $node;
                 }
             } else {
@@ -92,7 +93,7 @@ class NestedLoop
  */
 $loop = new NestedLoop(4, 4,[
     function($node) {
-        return isset($node['parentPathHash'][$node['value']]);
+        return !isset($node['parent']['pathHash'][$node['value']]);
     }
 ]);
 
