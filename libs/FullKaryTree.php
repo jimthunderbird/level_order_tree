@@ -1,21 +1,29 @@
 <?php
-class NestedLoop
+class FullKaryTree
 {
-    private $width;
+    private $numOfChilds;
     private $depth;
-    private $filters;
+    private $traverseFilters;
     private $paths;
 
-    public function __construct($width, $depth, $filters) {
-        $this->width = $width;
+    public function __construct($numOfChilds, $depth, $traverseFilters = []) {
+        $this->numOfChilds = $numOfChilds;
         $this->depth = $depth;
-        $this->filters = $filters;
+        $this->traverseFilters = $traverseFilters;
         $this->paths = [];
         $this->compute();
     }
 
+    public function getNumOfChilds() {
+        return $this->numOfChilds;
+    }
+
+    public function getDepth() {
+        return $this->depth;
+    }
+
     public function compute() {
-        $numOfChilds = $this->width;
+        $numOfChilds = $this->numOfChilds;
         $maxLevel = $this->depth;
 
         $traverseSequence = [[
@@ -33,15 +41,14 @@ class NestedLoop
             $curLevel = $traverseSequence[$parentPos]['level'] + 1;
             if ($curLevel <= $maxLevel) {
                 for($i = 1; $i <= $numOfChilds; $i++) {
-                    //we gather and current information and store it into a node
+                    //we gather the current information and store it into a node
                     $node = [];
                     $node['value'] = $i;
                     $node['level'] = $curLevel;
                     $node['parent'] = $traverseSequence[$parentPos];
 
-                    //filter, only find the unique sequence, aka, combination
                     $shouldSkip = false;
-                    foreach($this->filters as $filter) {
+                    foreach($this->traverseFilters as $filter) {
                         if ($filter($node) === FALSE) {
                             $shouldSkip = true;
                             break;
@@ -74,8 +81,8 @@ class NestedLoop
         }
     }
 
-    public function getPaths() {
+    public function getLeafPaths() {
         return $this->paths;
     }
-}
 
+}

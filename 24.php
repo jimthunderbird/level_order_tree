@@ -1,5 +1,5 @@
 <?php
-require 'libs/NestedLoop.php';
+require 'libs/FullKaryTree.php';
 /**
  * simulating:
  * for ($i = 1; $i <= 4; $i++) {
@@ -12,10 +12,10 @@ require 'libs/NestedLoop.php';
  *  }
  * }
  */
-$loop = new NestedLoop(4, 4,[
+$tree = new FullKaryTree(10, 5,[
     function($node) {
         return !isset($node['parent']['pathHash'][$node['value']]);
     }
 ]);
 
-print_r($loop->getPaths());
+print_r($tree->getLeafPaths());
