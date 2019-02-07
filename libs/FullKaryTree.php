@@ -3,14 +3,14 @@ class FullKaryTree
 {
     private $numOfChilds;
     private $depth;
+    private $traverseSequence;
     private $traverseFilters;
-    private $paths;
 
     public function __construct($numOfChilds, $depth, $traverseFilters = []) {
         $this->numOfChilds = $numOfChilds;
         $this->depth = $depth;
         $this->traverseFilters = $traverseFilters;
-        $this->paths = [];
+        $this->traverseSequence = [];
         $this->compute();
     }
 
@@ -74,15 +74,20 @@ class FullKaryTree
             }
         }
 
-        foreach($traverseSequence as $node) {
-            if ($node['level'] === $maxLevel) {
-                $this->paths[] = $node['path'];
+        $this->traverseSequence = $traverseSequence;
+    }
+
+    public function getPathsAtLevel($level) {
+        $result = [];
+        foreach($this->traverseSequence as $node) {
+            if ($node['level'] === $level) {
+                $result[] = $node['path'];
             }
         }
+        return $result;
     }
 
     public function getLeafPaths() {
-        return $this->paths;
+        return $this->getPathsAtLevel($this->depth);
     }
-
 }

@@ -12,10 +12,10 @@ require 'libs/FullKaryTree.php';
  *  }
  * }
  */
-$tree = new FullKaryTree(10, 5,[
+$tree = new FullKaryTree(4, 4,[
     function($node) {
         return !isset($node['parent']['pathHash'][$node['value']]);
     }
 ]);
 
-print_r($tree->getLeafPaths());
+print_r($tree->getPathsAtLevel(4));
