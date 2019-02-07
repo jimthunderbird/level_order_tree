@@ -26,26 +26,29 @@ class FullKaryTree
         $numOfChilds = $this->numOfChilds;
         $maxLevel = $this->depth;
 
-        $traverseSequence = [[
+        $rootNode = [
             'value' => 0,
             'level' => 0,
             'parent' => null,
             'path' => [],
             'pathHash' => []
-        ]];
+        ];
+
+        $traverseSequence = [$rootNode];
 
         $parentPos = -1;
 
         while(true) {
             $parentPos ++;
-            $curLevel = $traverseSequence[$parentPos]['level'] + 1;
+            $parent = $traverseSequence[$parentPos];
+            $curLevel = $parent['level'] + 1;
             if ($curLevel <= $maxLevel) {
                 for($i = 1; $i <= $numOfChilds; $i++) {
                     //we gather the current information and store it into a node
                     $node = [];
                     $node['value'] = $i;
                     $node['level'] = $curLevel;
-                    $node['parent'] = $traverseSequence[$parentPos];
+                    $node['parent'] = $parent;
 
                     $shouldSkip = false;
                     foreach($this->traverseFilters as $filter) {
@@ -59,9 +62,9 @@ class FullKaryTree
                         continue;
                     }
 
-                    $path = $traverseSequence[$parentPos]['path'];
+                    $path = $parent['path'];
                     $path[] = $i;
-                    $pathHash = $traverseSequence[$parentPos]['pathHash'];
+                    $pathHash = $parent['pathHash'];
                     $pathHash[$i] = 1;
 
                     $node['path'] = $path;
