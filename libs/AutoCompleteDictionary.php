@@ -54,17 +54,12 @@ class AutoCompleteDictionary
             $letter = $prefix[$i];
             $key = $this->getLevelHashKey($level, $letter);
             if (isset($this->levelHash[$key])) {
-                $wordIndexes = $this->levelHash[$key];
                 if ($i === 0) {
-                    $resultIndexes = $wordIndexes;
+                    $result = array_keys($this->levelHash[$key]);
                 } else {
-                    $resultIndexes = array_intersect($resultIndexes, $wordIndexes);
+                    $result = array_intersect($result, array_keys($this->levelHash[$key]));
                 }
             }
-        }
-
-        foreach($resultIndexes as $wordIndex) {
-            $result[] = ['index' => $wordIndex, 'word' => $this->words[$wordIndex]];
         }
 
         return $result;
