@@ -22,7 +22,7 @@ class AutoCompleteDictionary
         foreach($this->words as $index => $word) {
             $length = strlen($word);
             for ($i = 0; $i < $length; $i++) {
-                $level = $i + 1;
+                $level = $i;
 
                 if ($level > $this->maxLevel) {
                     $this->maxLevel = $level;
@@ -50,7 +50,7 @@ class AutoCompleteDictionary
         $resultIndexes = [];
         $length = strlen($prefix);
         for($i = 0; $i < $length; $i++) {
-            $level = $i + 1;
+            $level = $i;
             $letter = $prefix[$i];
             $key = $this->getLevelHashKey($level, $letter);
             if (isset($this->levelHash[$key])) {
@@ -94,10 +94,13 @@ $words = [
     'api',
     'jim',
     'jit',
-    'icecream'
+    'icecream',
+    'knot',
+    'knowledge',
+    'cool'
 ];
 foreach($words as $word) {
     $dictionary->addWord($word);
 }
 $dictionary->build();
-print_r($dictionary->search('ic'));
+print_r($dictionary->search('b'));
