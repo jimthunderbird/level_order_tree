@@ -47,7 +47,6 @@ class AutoCompleteDictionary
 
     public function search($prefix) {
         $result = [];
-        $resultIndexes = [];
         $length = strlen($prefix);
         for($i = 0; $i < $length; $i++) {
             $level = $i;
