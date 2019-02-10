@@ -48,9 +48,10 @@ class AutoCompleteDictionary2
             $indexes = $this->levelHash["$level$prefix"];
         }
         foreach($indexes as $index) {
-            $result[] = $this->words[$index];
+            $word = $this->words[$index];
+            $result[$word] = $this->words[$index];
         }
-        return $result;
+        return array_keys($result); //we do not want duplicates
     }
 }
 
@@ -78,9 +79,9 @@ $words = [
     'knowledge',
     'cool',
     'application',
-    'apply'
+    'apply',
 ];
 foreach($words as $word) {
     $dictionary->addWord($word);
 }
-print_r($dictionary->search('bu'));
+print_r($dictionary->search('bull'));
