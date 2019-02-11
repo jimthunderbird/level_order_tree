@@ -91,10 +91,12 @@ $words = [
     'icecream',
     'knot',
     'knowledge',
-    'cool'
+    'cool',
+    'application',
+    'apply'
 ];
 foreach($words as $word) {
     $dictionary->addWord($word);
 }
 $dictionary->build();
-print_r($dictionary->search('b'));
+print_r($dictionary->search('app'));

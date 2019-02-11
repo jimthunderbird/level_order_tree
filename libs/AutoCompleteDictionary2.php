@@ -6,7 +6,6 @@ class AutoCompleteDictionary2
 {
     private $words;
     private $patternHash;
-    private $maxLevel;
 
     public function __construct() {
         $this->wordPos = 0;

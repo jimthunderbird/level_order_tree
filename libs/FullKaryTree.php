@@ -80,6 +80,10 @@ class FullKaryTree
         $this->traverseSequence = $traverseSequence;
     }
 
+    public function getTraverseSequence() {
+        return $this->traverseSequence;
+    }
+
     public function getPathsAtLevel($level) {
         $result = [];
         foreach($this->traverseSequence as $node) {
