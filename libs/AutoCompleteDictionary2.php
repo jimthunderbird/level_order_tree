@@ -22,7 +22,7 @@ class AutoCompleteDictionary2
             } else {
                 $pattern = substr($word, 0, -$k);
             }
-            $this->patternHash[$pattern][] = $this->wordPos;
+            $this->patternHash[$pattern][$word] = 1; //we do not want duplicates
         }
 
         $this->words[] = $word;
@@ -31,15 +31,10 @@ class AutoCompleteDictionary2
 
     public function search($pattern) {
         $result = [];
-        $indexes = [];
         if (isset($this->patternHash[$pattern])) {
-            $indexes = $this->patternHash[$pattern];
+            $result = array_keys($this->patternHash[$pattern]);
         }
-        foreach($indexes as $index) {
-            $word = $this->words[$index];
-            $result[$word] = $this->words[$index];
-        }
-        return array_keys($result); //we do not want duplicates
+        return $result;
     }
 }
 
