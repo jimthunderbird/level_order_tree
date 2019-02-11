@@ -4,12 +4,9 @@
  */
 class AutoCompleteDictionary2
 {
-    private $words;
     private $patternHash;
 
     public function __construct() {
-        $this->wordPos = 0;
-        $this->words = [];
         $this->patternHash = [];
     }
 
@@ -24,9 +21,6 @@ class AutoCompleteDictionary2
             }
             $this->patternHash[$pattern][$word] = 1; //we do not want duplicates
         }
-
-        $this->words[] = $word;
-        $this->wordPos++;
     }
 
     public function search($pattern) {
